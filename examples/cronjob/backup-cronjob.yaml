@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: db-backup-cron
+spec:
+  # every 5 minutes...
+  schedule: "*/5 * * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: backup
+            image: alpine
+            command: ["/bin/sh", "-c"]
+            args:
+              - echo "Performing backup at $(date)";
+                # In a real scenario, you'd run a backup script here
+          restartPolicy: Never
