@@ -31,3 +31,19 @@ Also:
 * Get list of pods: `kubectl get pods`.
 * Check the logs (get the hash value from the list of pods): `kubectl logs -f db-backup-cron-<hash>`.
 * To delete: `kubectl delete cronjob db-backup-cron`.
+
+## Redis (Guest Book)
+
+A simple guest book application that uses Redis as a database.
+
+Steps:
+1. `docker build -t my-guestbook examples/redis/src`.
+2. ~~`minikube image load my-guestbook:latest`~~. Didn't work. Instead, trying the following:
+   1. (Windows) `& minikube -p minikube docker-env --shell powershell | Invoke-Expression`.
+   2. `docker build -t my-guestbook examples/redis/src`.
+3. `kubectl apply -f examples/redis/redis-deployment.yaml`.
+4. `kubectl apply -f examples/redis/guestbook-deployment.yaml`.
+
+Go to: `http://<node-ip>:30001`.
+
+Or: `kubectl port-forward service/guestbook-service 8082:3000`.
